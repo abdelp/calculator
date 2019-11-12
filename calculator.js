@@ -24,14 +24,17 @@ function initializeCalc() {
             case element.classList.contains("clean-all-button"):
                 element.addEventListener("click", function() { cleanOperations() });
                 break;
+            case element.classList.contains("modulus-button"):
+                element.addEventListener("click", function() { modulus() });
+                break;
             case element.classList.contains("operate-button"):
-                    element.addEventListener("click", function() { operate() });
+                element.addEventListener("click", function() { operate() });
         }
     }
 }
 
 function add(num1, num2) {
-    return num1 + num2;
+    return Math.round((num1 + num2) * 100) / 100;
 }
 
 function subtract(num1, num2) {
@@ -43,13 +46,23 @@ function multiply(num1, num2) {
 }
 
 function divide(num1, num2) {
-    console.log(num2);
-    console.log(num2 == 0);
+
     if(num2 == 0) {
-        console.log("error?");
         return "Cannot divide by zero";
     }
     return Math.round((num1 / num2) * 100) / 100;
+}
+
+function modulus() {
+    if(this.displayValue != "" && this.displayValue != "Cannot divide by zero") {
+        const displayValueDiv = document.getElementById("calc-input");
+        const mod = Math.round((Number(displayValueDiv.innerText) / 100) * 100) / 100;
+
+        this.displayValue = `${mod}`;
+        this.displayValue = this.displayValue.trimStart();
+
+        displayValueDiv.innerText = this.displayValue;
+    }
 }
 
 function setDisplayValue(newValue) {
@@ -101,6 +114,7 @@ function operate() {
         let displayValue = document.getElementById("calc-input");
 
         this.lastValue += ` ${displayValue.innerText}`;
+
         let calculateValues = this.lastValue.split(" ");
 
         for(let i = 0; i < calculateValues.length; i++) {
@@ -114,7 +128,6 @@ function operate() {
                         break;
                     case "÷":
                         result = divide(Number(calculateValues[i-1]), Number(calculateValues[i+1]));
-                        console.log(result);
                         if(result != "Cannot divide by zero") {
                             calculateValues.splice(i-1, 3, result);
                             i--;
@@ -159,7 +172,7 @@ function setOperator(operator) {
     let lastResultDiv = document.getElementById("last-result-input");
     let displayValueDiv = document.getElementById("calc-input");
 
-    if(this.displayValue != "" || lastResultDiv.innerText == "" || this.displayValue != "Cannot divide by zero") {
+    if((this.displayValue != "" || lastResultDiv.innerText == "") && this.displayValue != "Cannot divide by zero") {
         this.operator = operator;
 
         this.lastValue += ` ${this.displayValue} ${operator}`;
