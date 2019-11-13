@@ -1,7 +1,7 @@
 * { font-family: sans-serif; }
 
-.calc-button:hover {
-    background-color: lightgray;
+.calc-button:hover, .number-button:hover {
+    background-color: gray;
     
 }
 
@@ -11,6 +11,7 @@ h1 {
 
 .calc-button {
     cursor: hand;
+    border-radius: 5px;
 }
 
 .last-result { grid-area: header1; }
@@ -55,8 +56,8 @@ h1 {
     background-color: silver;
     padding: 10px;
     width: 450px;
-    margin: 0 auto;
     border-radius: 5px;
+    margin: 0 auto;
 }
 
 .grid-container > div {
@@ -74,6 +75,7 @@ h1 {
     background-color: salmon !important;
     color: #EFEFEF;
 }
+
 #calc-input {
     max-width: 100%;
     padding: 15px;
@@ -88,4 +90,8 @@ h1 {
     padding: 15px;
     border-radius: 10px;
     text-align: right;
+}
+
+.footer-text{
+    text-align: center;
 }
