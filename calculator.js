@@ -3,12 +3,12 @@ lastValue = "";
 operator = "";
 
 function initializeCalc() {
-    let displayValueDiv = document.getElementById("calc-input");
+    const displayValueDiv = document.getElementById("calc-input");
     displayValueDiv.innerText = this.displayValue;
 
-    const numberButtons = document.getElementsByClassName("calc-button");
+    const calcButtons = document.getElementsByClassName("calc-button");
 
-    for(let element of numberButtons) {
+    for(let element of calcButtons) {
         const option = element.innerText;
 
         switch(true) {
@@ -30,6 +30,41 @@ function initializeCalc() {
             case element.classList.contains("operate-button"):
                 element.addEventListener("click", function() { operate() });
         }
+    }
+
+    document.onkeyup = function(e) { 
+        const numbersExp = new RegExp(/[0-9\.]/);
+        const operatorsExp = new RegExp(/[\+\-\*\/]/);
+
+        if(numbersExp.test(e.key)) {
+            setDisplayValue(e.key);
+        } else if(operatorsExp.test(e.key)) {
+            let key;
+
+            switch(e.key) {
+                case "/":
+                    key = "÷";
+                    break;
+                case "*":
+                    key = "x";
+            }
+
+            setOperator(key);
+        } else if(e.key =="%") {
+            modulus();
+        } else if(e.key == "=" || e.key == "Enter") {
+            operate();
+        } else if(e.key == "Backspace") {
+            cleanCharacter();
+        }
+     }
+}
+
+function keyPressed(ev) {
+    const regExp = new RegExp(/[0-9]/);
+    
+    if(regExp.test(Number(ev))) {
+        setDisplayValue = ev;
     }
 }
 
