@@ -101,16 +101,24 @@ function modulus() {
 }
 
 function setDisplayValue(newValue) {
+    const regExp = new RegExp(".");
 
     if(this.displayValue === "0" || this.displayValue == "Cannot divide by zero") {
-        if(newValue == ".") {
+
+        if(newValue == "." && this.displayValue === "0") {
             this.displayValue += ".";
         } else {
             this.displayValue = newValue.toString();
         }
         
     } else {
-        this.displayValue += newValue.toString();
+
+        if(newValue == "." && !regExp.test(this.displayValue)) {
+            this.displayValue += newValue.toString();
+        } else if(newValue != ".") {
+            this.displayValue += newValue.toString();
+        }
+        
     }
 
     let calcInput = document.getElementById("calc-input");
@@ -216,8 +224,4 @@ function setOperator(operator) {
         this.displayValue = "";
         displayValueDiv.innerText = "";
     }
-}
-
-function getDisplayValue() {
-    return this.displayValue;
 }
